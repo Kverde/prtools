@@ -1,0 +1,9 @@
+object fMain: TfMain
+  Left = 345
+  Height = 266
+  Top = 138
+  Width = 320
+  Caption = 'PFTool'
+  DesignTimePPI = 120
+  LCLVersion = '2.2.4.0'
+end

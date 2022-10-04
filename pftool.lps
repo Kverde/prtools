@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units>
+      <Unit>
+        <Filename Value="pftool.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="source\u_main.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="fMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3"/>
+        <CursorPos X="136" Y="12"/>
+        <UsageCount Value="20"/>
+      </Unit>
+      <Unit>
+        <Filename Value="umain.lfm"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit>
+      <Unit>
+        <Filename Value=".gitignore"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="21"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit>
+    </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="-1"/>
+    </General>
+    <JumpHistory HistoryIndex="-1"/>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
