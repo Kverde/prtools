@@ -23,8 +23,8 @@ type
     procedure FormWindowStateChange(Sender: TObject);
     procedure TrayIconDblClick(Sender: TObject);
   private
-    FHotKeyReplaceCRLFID: Integer;
-    FHotKeyPasteMenuId: Integer;
+    FHotKeyReplaceCRLFID: integer;
+    FHotKeyPasteMenuId: integer;
 
     // Shortcuts
 
@@ -37,7 +37,7 @@ type
 
     // Events
 
-    procedure WMHotKey(var Msg:TMessage); message WM_HOTKEY;
+    procedure WMHotKey(var Msg: TMessage); message WM_HOTKEY;
 
     procedure ReplaceCRLFInClipboard();
     procedure ShowPasteMenu();
@@ -91,8 +91,8 @@ procedure TfMain.FormWindowStateChange(Sender: TObject);
 begin
   if WindowState = wsminimized then
   begin
-     Hide;
-     TrayIcon.Visible := true;
+    Hide;
+    TrayIcon.Visible := True;
   end;
 end;
 
@@ -101,7 +101,7 @@ begin
   WindowState := wsNormal;
   Show;
   SetFocus;
-  TrayIcon.Visible := false;
+  TrayIcon.Visible := False;
 end;
 
 procedure TfMain.LoadShortcuts;
@@ -132,7 +132,7 @@ end;
 procedure TfMain.ConstructPasteMenu(const AShortcutMap: TStringMap);
 var
   MenuItem: TMenuItem;
-  i: Integer;
+  i: integer;
 begin
   for i := 0 to AShortcutMap.Count - 1 do
   begin
@@ -172,4 +172,3 @@ begin
 end;
 
 end.
-

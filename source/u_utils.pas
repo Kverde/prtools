@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils;
 
-  function RemoveCRLF(const AText: string): string;
+function RemoveCRLF(const AText: string): string;
 
 implementation
 
@@ -16,7 +16,7 @@ const
   BreakLineMarker = '@';
 var
   Lines: TStringArray;
-  i: Integer;
+  i: integer;
 begin
   Lines := AText.Replace(#13#10#13#10, BreakLineMarker).Split(BreakLineMarker, TStringSplitOptions.ExcludeEmpty);
 
@@ -29,4 +29,3 @@ begin
 end;
 
 end.
-
