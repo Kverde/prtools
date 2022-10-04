@@ -1,7 +1,7 @@
 object fMain: TfMain
-  Left = 650
+  Left = 493
   Height = 477
-  Top = 209
+  Top = 277
   Width = 515
   Caption = 'PFTool'
   DesignTimePPI = 120
@@ -4182,6 +4182,11 @@ object fMain: TfMain
     }
     OnDblClick = TrayIconDblClick
     Left = 353
-    Top = 192
+    Top = 224
+  end
+  object pmPaste: TPopupMenu
+    AutoPopup = False
+    Left = 352
+    Top = 144
   end
 end
