@@ -4,11 +4,35 @@ object fMain: TfMain
   Top = 277
   Width = 515
   Caption = 'PFTool'
+  ClientHeight = 477
+  ClientWidth = 515
   DesignTimePPI = 120
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnWindowStateChange = FormWindowStateChange
   LCLVersion = '2.2.4.0'
+  object Label1: TLabel
+    Left = 176
+    Height = 81
+    Top = 24
+    Width = 173
+    Caption = 'PFTool'
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -60
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object bClose: TButton
+    Left = 209
+    Height = 31
+    Top = 393
+    Width = 94
+    Caption = 'Close'
+    OnClick = bCloseClick
+    TabOrder = 0
+  end
   object TrayIcon: TTrayIcon
     Icon.Data = {
       E10802000000010008000000000001002000D39A000086000000808000000100

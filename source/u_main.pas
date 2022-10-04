@@ -16,8 +16,11 @@ type
   { TfMain }
 
   TfMain = class(TForm)
+    bClose: TButton;
+    Label1: TLabel;
     pmPaste: TPopupMenu;
     TrayIcon: TTrayIcon;
+    procedure bCloseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormWindowStateChange(Sender: TObject);
@@ -77,6 +80,11 @@ begin
   // HotKey CTRL + E
   FHotKeyPasteMenuId := GlobalAddAtom('FHotKeyPasteMenuId');
   RegisterHotKey(Handle, FHotKeyPasteMenuId, MOD_CONTROL, VK_E);
+end;
+
+procedure TfMain.bCloseClick(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TfMain.FormDestroy(Sender: TObject);
