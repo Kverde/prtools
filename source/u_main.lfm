@@ -1,9 +1,11 @@
 object fMain: TfMain
   Left = 345
-  Height = 266
+  Height = 477
   Top = 138
-  Width = 320
+  Width = 515
   Caption = 'PFTool'
   DesignTimePPI = 120
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   LCLVersion = '2.2.4.0'
 end

@@ -41,6 +41,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
+      <Unit>
+        <Filename Value="source\u_utils.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -55,6 +59,9 @@
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2Set"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
