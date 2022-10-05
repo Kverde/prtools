@@ -18,7 +18,10 @@ type
   TfMain = class(TForm)
     bClose: TButton;
     Label1: TLabel;
+    miReloadConfig: TMenuItem;
+    miClose: TMenuItem;
     pmPaste: TPopupMenu;
+    pmTray: TPopupMenu;
     TrayIcon: TTrayIcon;
     procedure bCloseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

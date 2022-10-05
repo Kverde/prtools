@@ -34,6 +34,7 @@ object fMain: TfMain
     TabOrder = 0
   end
   object TrayIcon: TTrayIcon
+    PopUpMenu = pmTray
     Icon.Data = {
       E10802000000010008000000000001002000D39A000086000000808000000100
       200028080100599B00003030000001002000A825000081A30100282800000100
@@ -4212,5 +4213,16 @@ object fMain: TfMain
     AutoPopup = False
     Left = 352
     Top = 144
+  end
+  object pmTray: TPopupMenu
+    Left = 152
+    Top = 192
+    object miReloadConfig: TMenuItem
+      Caption = 'Reload config'
+    end
+    object miClose: TMenuItem
+      Caption = 'Close'
+      OnClick = bCloseClick
+    end
   end
 end
