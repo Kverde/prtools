@@ -17,13 +17,18 @@ type
 
   TfMain = class(TForm)
     bClose: TButton;
+    bHideToTrya: TButton;
+    bReloadConfig: TButton;
     Label1: TLabel;
+    lbDescription: TLabel;
     miReloadConfig: TMenuItem;
     miClose: TMenuItem;
     pmPaste: TPopupMenu;
     pmTray: TPopupMenu;
     TrayIcon: TTrayIcon;
     procedure bCloseClick(Sender: TObject);
+    procedure bHideToTryaClick(Sender: TObject);
+    procedure bReloadConfigClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormWindowStateChange(Sender: TObject);
@@ -33,15 +38,21 @@ type
     FHotKeyReplaceCRLFID: integer;
     FHotKeyPasteMenuId: integer;
 
-    // Shortcuts
-
     FShortcuts: TStringMap;
+
+    // GUI
+
+    procedure HideToTray();
+
+    // Shortcuts
 
     procedure LoadShortcutsConfig();
     procedure ConstructPasteMenu(const AShortcutMap: TStringMap);
     procedure ReloadShortcutsConfig();
 
     procedure HandlePasteMenu(Sender: TObject);
+
+
 
 
     // Events
@@ -66,6 +77,9 @@ implementation
 uses
   Clipbrd, IniFiles,
   u_utils;
+
+const
+  ConfigFileName = 'prtools_config.ini';
 
 { TfMain }
 
@@ -92,6 +106,16 @@ begin
   Close;
 end;
 
+procedure TfMain.bHideToTryaClick(Sender: TObject);
+begin
+  HideToTray;
+end;
+
+procedure TfMain.bReloadConfigClick(Sender: TObject);
+begin
+  ReloadShortcutsConfig();
+end;
+
 procedure TfMain.FormDestroy(Sender: TObject);
 begin
   UnRegisterHotKey(Handle, FHotKeyReplaceCRLFID);
@@ -104,8 +128,7 @@ procedure TfMain.FormWindowStateChange(Sender: TObject);
 begin
   if WindowState = wsminimized then
   begin
-    Hide;
-    TrayIcon.Visible := True;
+    HideToTray();
   end;
 end;
 
@@ -122,9 +145,14 @@ begin
   TrayIcon.Visible := False;
 end;
 
+procedure TfMain.HideToTray;
+begin
+  Hide;
+  TrayIcon.Visible := True;
+end;
+
 procedure TfMain.LoadShortcutsConfig;
 const
-  IniFileName = 'pgtool_config.ini';
   SettingsSectionName = 'shortcuts';
 var
   IniFile: TIniFile;
@@ -134,7 +162,7 @@ begin
   IniFile := nil;
   Settings := nil;
 
-  IniFile := TIniFile.Create(IniFileName);
+  IniFile := TIniFile.Create(ConfigFileName);
   Settings := TStringList.Create;
 
   try

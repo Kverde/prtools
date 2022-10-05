@@ -1,4 +1,4 @@
-program pftool;
+program prtools;
 
 {$mode objfpc}{$H+}
 
