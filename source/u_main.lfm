@@ -4219,6 +4219,7 @@ object fMain: TfMain
     Top = 192
     object miReloadConfig: TMenuItem
       Caption = 'Reload config'
+      OnClick = miReloadConfigClick
     end
     object miClose: TMenuItem
       Caption = 'Close'

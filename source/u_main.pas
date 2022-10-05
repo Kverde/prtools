@@ -27,6 +27,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormWindowStateChange(Sender: TObject);
+    procedure miReloadConfigClick(Sender: TObject);
     procedure TrayIconDblClick(Sender: TObject);
   private
     FHotKeyReplaceCRLFID: integer;
@@ -36,8 +37,10 @@ type
 
     FShortcuts: TStringMap;
 
-    procedure LoadShortcuts();
+    procedure LoadShortcutsConfig();
     procedure ConstructPasteMenu(const AShortcutMap: TStringMap);
+    procedure ReloadShortcutsConfig();
+
     procedure HandlePasteMenu(Sender: TObject);
 
 
@@ -70,8 +73,7 @@ procedure TfMain.FormCreate(Sender: TObject);
 begin
   FShortcuts := TStringMap.Create;
 
-  LoadShortcuts();
-  ConstructPasteMenu(FShortcuts);
+  ReloadShortcutsConfig();
 
   // Hotkey description
   // https://www.askingbox.com/tutorial/delphi-system-wide-hotkey
@@ -107,6 +109,11 @@ begin
   end;
 end;
 
+procedure TfMain.miReloadConfigClick(Sender: TObject);
+begin
+  ReloadShortcutsConfig();
+end;
+
 procedure TfMain.TrayIconDblClick(Sender: TObject);
 begin
   WindowState := wsNormal;
@@ -115,7 +122,7 @@ begin
   TrayIcon.Visible := False;
 end;
 
-procedure TfMain.LoadShortcuts;
+procedure TfMain.LoadShortcutsConfig;
 const
   IniFileName = 'pgtool_config.ini';
   SettingsSectionName = 'shortcuts';
@@ -131,6 +138,8 @@ begin
   Settings := TStringList.Create;
 
   try
+    FShortcuts.Clear;
+
     IniFile.ReadSection(SettingsSectionName, Settings);
     for SettingName in Settings do
       FShortcuts.Add(SettingName, IniFile.ReadString(SettingsSectionName, SettingName, ''));
@@ -145,6 +154,8 @@ var
   MenuItem: TMenuItem;
   i: integer;
 begin
+  pmPaste.Items.Clear;
+
   for i := 0 to AShortcutMap.Count - 1 do
   begin
     MenuItem := TMenuItem.Create(Self);
@@ -152,6 +163,12 @@ begin
     MenuItem.OnClick := @HandlePasteMenu;
     pmPaste.Items.Add(MenuItem);
   end;
+end;
+
+procedure TfMain.ReloadShortcutsConfig;
+begin
+  LoadShortcutsConfig();
+  ConstructPasteMenu(FShortcuts);
 end;
 
 procedure TfMain.HandlePasteMenu(Sender: TObject);
