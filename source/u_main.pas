@@ -201,10 +201,21 @@ end;
 
 procedure TfMain.HandlePasteMenu(Sender: TObject);
 var
-  Shortcut: string;
+  Template, TemplateParam: string;
+  ShiftState: TShiftState;
 begin
-  Shortcut := FShortcuts[TMenuItem(Sender).Caption];
-  Clipboard.AsText := Shortcut;
+  ShiftState := GetKeyShiftState;
+
+  Template := FShortcuts[TMenuItem(Sender).Caption];
+
+  if ssCtrl in ShiftState then
+  begin
+    TemplateParam := '';
+  end else begin
+    TemplateParam := Clipboard.AsText;
+  end;
+
+  Clipboard.AsText := Template.Replace('@', TemplateParam);
 end;
 
 
