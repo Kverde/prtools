@@ -6,16 +6,16 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Menus, Windows, fgl;
+  Menus, Windows,
+
+  // custom
+  u_utils;
 
 type
 
-  TStringMap = specialize TFPGMap<string, string>;
+  { TFormMain }
 
-
-  { TfMain }
-
-  TfMain = class(TForm)
+  TFormMain = class(TForm)
     bClose: TButton;
     bHideToTrya: TButton;
     bReloadConfig: TButton;
@@ -23,7 +23,6 @@ type
     lbDescription: TLabel;
     miReloadConfig: TMenuItem;
     miClose: TMenuItem;
-    pmPaste: TPopupMenu;
     pmTray: TPopupMenu;
     TrayIcon: TTrayIcon;
     procedure bCloseClick(Sender: TObject);
@@ -47,8 +46,6 @@ type
     // Shortcuts
 
     procedure LoadShortcutsConfig();
-    procedure ConstructPasteMenu(const AShortcutMap: TStringMap);
-    procedure ReloadShortcutsConfig();
 
     procedure HandlePasteMenu(Sender: TObject);
 
@@ -68,7 +65,7 @@ type
   end;
 
 var
-  fMain: TfMain;
+  FormMain: TFormMain;
 
 implementation
 
@@ -76,18 +73,19 @@ implementation
 
 uses
   Clipbrd, IniFiles,
-  u_utils;
+  // custom
+  u_chice_shortcut;
 
 const
   ConfigFileName = 'prtools_config.ini';
 
-{ TfMain }
+{ TFormMain }
 
-procedure TfMain.FormCreate(Sender: TObject);
+procedure TFormMain.FormCreate(Sender: TObject);
 begin
   FShortcuts := TStringMap.Create;
 
-  ReloadShortcutsConfig();
+  LoadShortcutsConfig();
 
   // Hotkey description
   // https://www.askingbox.com/tutorial/delphi-system-wide-hotkey
@@ -101,22 +99,22 @@ begin
   RegisterHotKey(Handle, FHotKeyPasteMenuId, MOD_CONTROL, VK_E);
 end;
 
-procedure TfMain.bCloseClick(Sender: TObject);
+procedure TFormMain.bCloseClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TfMain.bHideToTryaClick(Sender: TObject);
+procedure TFormMain.bHideToTryaClick(Sender: TObject);
 begin
   HideToTray;
 end;
 
-procedure TfMain.bReloadConfigClick(Sender: TObject);
+procedure TFormMain.bReloadConfigClick(Sender: TObject);
 begin
-  ReloadShortcutsConfig();
+  LoadShortcutsConfig();
 end;
 
-procedure TfMain.FormDestroy(Sender: TObject);
+procedure TFormMain.FormDestroy(Sender: TObject);
 begin
   UnRegisterHotKey(Handle, FHotKeyReplaceCRLFID);
   GlobalDeleteAtom(FHotKeyReplaceCRLFID);
@@ -124,7 +122,7 @@ begin
   FreeAndNil(FShortcuts);
 end;
 
-procedure TfMain.FormWindowStateChange(Sender: TObject);
+procedure TFormMain.FormWindowStateChange(Sender: TObject);
 begin
   if WindowState = wsminimized then
   begin
@@ -132,12 +130,12 @@ begin
   end;
 end;
 
-procedure TfMain.miReloadConfigClick(Sender: TObject);
+procedure TFormMain.miReloadConfigClick(Sender: TObject);
 begin
-  ReloadShortcutsConfig();
+  LoadShortcutsConfig();
 end;
 
-procedure TfMain.TrayIconDblClick(Sender: TObject);
+procedure TFormMain.TrayIconDblClick(Sender: TObject);
 begin
   WindowState := wsNormal;
   Show;
@@ -145,13 +143,13 @@ begin
   TrayIcon.Visible := False;
 end;
 
-procedure TfMain.HideToTray;
+procedure TFormMain.HideToTray;
 begin
   Hide;
   TrayIcon.Visible := True;
 end;
 
-procedure TfMain.LoadShortcutsConfig;
+procedure TFormMain.LoadShortcutsConfig;
 const
   SettingsSectionName = 'shortcuts';
 var
@@ -177,29 +175,7 @@ begin
   end;
 end;
 
-procedure TfMain.ConstructPasteMenu(const AShortcutMap: TStringMap);
-var
-  MenuItem: TMenuItem;
-  i: integer;
-begin
-  pmPaste.Items.Clear;
-
-  for i := 0 to AShortcutMap.Count - 1 do
-  begin
-    MenuItem := TMenuItem.Create(Self);
-    MenuItem.Caption := AShortcutMap.Keys[i];
-    MenuItem.OnClick := @HandlePasteMenu;
-    pmPaste.Items.Add(MenuItem);
-  end;
-end;
-
-procedure TfMain.ReloadShortcutsConfig;
-begin
-  LoadShortcutsConfig();
-  ConstructPasteMenu(FShortcuts);
-end;
-
-procedure TfMain.HandlePasteMenu(Sender: TObject);
+procedure TFormMain.HandlePasteMenu(Sender: TObject);
 var
   Template, TemplateParam: string;
   ShiftState: TShiftState;
@@ -219,7 +195,7 @@ begin
 end;
 
 
-procedure TfMain.WMHotKey(var Msg: TMessage);
+procedure TFormMain.WMHotKey(var Msg: TMessage);
 begin
   if Msg.wParam = FHotKeyReplaceCRLFID then
     ReplaceCRLFInClipboard;
@@ -228,14 +204,34 @@ begin
     ShowPasteMenu;
 end;
 
-procedure TfMain.ReplaceCRLFInClipboard;
+procedure TFormMain.ReplaceCRLFInClipboard;
 begin
   Clipboard.AsText := RemoveCRLF(Clipboard.AsText);
 end;
 
-procedure TfMain.ShowPasteMenu;
+procedure TFormMain.ShowPasteMenu;
+var
+  Shortcut, Template, TemplateParam: string;
+  ShiftState: TShiftState;
+
 begin
-  pmPaste.PopUp(Mouse.CursorPos.X, Mouse.CursorPos.Y);
+  Shortcut := TFormPickFromList.ShowPickDialog(FShortcuts.GetKeys);
+
+  if Shortcut.IsEmpty then
+    Exit;
+
+  Template := FShortcuts[Shortcut];
+
+  ShiftState := GetKeyShiftState;
+
+  if ssCtrl in ShiftState then
+  begin
+    TemplateParam := '';
+  end else begin
+    TemplateParam := Clipboard.AsText;
+  end;
+
+  Clipboard.AsText := Template.Replace('@', TemplateParam);
 end;
 
 end.

@@ -10,7 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, u_main, u_utils
+  Forms, lazcontrols, u_main, u_utils, u_chice_shortcut
   { you can add units after this };
 
 {$R *.res}
@@ -19,7 +19,7 @@ begin
   RequireDerivedFormResource:=True;
   Application.Scaled:=True;
   Application.Initialize;
-  Application.CreateForm(TfMain, fMain);
+  Application.CreateForm(TFormMain, FormMain);
   Application.Run;
 end.
 

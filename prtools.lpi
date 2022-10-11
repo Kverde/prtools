@@ -26,6 +26,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="LazControls"/>
+      </Item>
+      <Item>
         <PackageName Value="LCL"/>
       </Item>
     </RequiredPackages>
@@ -37,13 +40,19 @@
       <Unit>
         <Filename Value="source\u_main.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="fMain"/>
+        <ComponentName Value="FormMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit>
       <Unit>
         <Filename Value="source\u_utils.pas"/>
         <IsPartOfProject Value="True"/>
+      </Unit>
+      <Unit>
+        <Filename Value="source\u_chice_shortcut.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormPickFromList"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit>
     </Units>
   </ProjectOptions>

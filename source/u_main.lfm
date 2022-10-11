@@ -1,7 +1,7 @@
-object fMain: TfMain
-  Left = 500
+object FormMain: TFormMain
+  Left = 362
   Height = 477
-  Top = 286
+  Top = 297
   Width = 515
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -12,6 +12,7 @@ object fMain: TfMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnWindowStateChange = FormWindowStateChange
+  Position = poDesktopCenter
   LCLVersion = '2.2.4.0'
   object Label1: TLabel
     Left = 160
@@ -4236,11 +4237,6 @@ object fMain: TfMain
     OnDblClick = TrayIconDblClick
     Left = 48
     Top = 232
-  end
-  object pmPaste: TPopupMenu
-    AutoPopup = False
-    Left = 48
-    Top = 160
   end
   object pmTray: TPopupMenu
     Left = 48

@@ -5,7 +5,19 @@ unit u_utils;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, fgl;
+
+type
+  TStringMapCustom = specialize TFPGMap<string, string>;
+
+  { TStringMap }
+
+  TStringMap = class(TStringMapCustom)
+  public
+    function GetKeys: TStringArray;
+  end;
+
+
 
 function RemoveCRLF(const AText: string): string;
 
@@ -26,6 +38,19 @@ begin
   end;
 
   Result := string.Join(#13#10#13#10, Lines);
+end;
+
+{ TStringMap }
+
+function TStringMap.GetKeys: TStringArray;
+var
+  i: Integer;
+begin
+  SetLength(Result, Count);
+  for i := 0 to Count - 1 do
+  begin
+    Result[i] := Keys[i];
+  end;
 end;
 
 end.
