@@ -28,6 +28,7 @@ object FormPickFromList: TFormPickFromList
     Width = 399
     Align = alClient
     ItemHeight = 0
+    OnDblClick = lbShortcutDblClick
     TabOrder = 1
   end
   object Panel1: TPanel

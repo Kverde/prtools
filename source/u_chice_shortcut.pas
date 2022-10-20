@@ -19,6 +19,7 @@ type
     ListFilterEdit1: TListFilterEdit;
     Panel1: TPanel;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure lbShortcutDblClick(Sender: TObject);
   private
 
     procedure FillList(const APickList: TStringArray);
@@ -46,6 +47,11 @@ begin
   begin
     ModalResult := mrCancel;
   end;
+end;
+
+procedure TFormPickFromList.lbShortcutDblClick(Sender: TObject);
+begin
+  ModalResult := mrOK;
 end;
 
 procedure TFormPickFromList.FillList(const APickList: TStringArray);
